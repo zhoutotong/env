@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y sudo \
     && pip install django-markdownx -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install django-mdeditor -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install django-xadmin -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && pip install django-bootstrap3 -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    && pip install django-bootstrap3 -i https://pypi.tuna.tsinghua.edu.cn/simple
+    
 USER ${user}
 # Inform Docker that the container is listening on the specified port at runtime.
 EXPOSE 8080
