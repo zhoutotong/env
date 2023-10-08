@@ -4,12 +4,12 @@
 # 2. 检查是否安装oh-my-zsh，如未安装则安装；
 # 3. 检查oh-my-zsh是否安装了zsh-autosuggestions zsh-syntax-highlighting插件，如果没有则安装
 
+sudo apt update
 # 1. 检查是否安装Zsh，如未安装则安装
 if ! command -v zsh &> /dev/null; then
     echo "Zsh未安装，正在安装..."
     # 使用适合你的Linux发行版的包管理器来安装Zsh
     # 例如，如果你使用apt，可以使用以下命令：
-    # sudo apt update
     sudo apt install zsh
     # 如果你使用yum，可以使用以下命令：
     # sudo yum install zsh
