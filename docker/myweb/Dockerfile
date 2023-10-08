@@ -3,9 +3,6 @@ FROM python:3.9.10
 
 ARG user=tong
 
-# Set the working directory.
-WORKDIR /home/${user}/
-
 # Copy the file from your host to your current location.
 # COPY package.json .
 
@@ -19,14 +16,19 @@ RUN apt-get update && apt-get install -y sudo \
     && pip install django-markdownx -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install django-mdeditor -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install django-xadmin -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && pip install django-bootstrap3 -i https://pypi.tuna.tsinghua.edu.cn/simple
+    && pip install django-bootstrap3 -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    && pip install uwsgi -i https://pypi.tuna.tsinghua.edu.cn/simple
     
 USER ${user}
 # Inform Docker that the container is listening on the specified port at runtime.
 EXPOSE 8080
 
+# Set the working directory.
+WORKDIR /myweb
+
+ENV MYWEB_IS_DEBUG=0
 # Run the specified command within the container.
-# CMD [ "npm", "start" ]
+CMD [ "sh", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --no-input && uwsgi --chdir=./ --wsgi-file=./myweb/wsgi.py --static-map=/static=./statics --ini uwsgi/uwsgi.ini"]
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 # COPY . .
