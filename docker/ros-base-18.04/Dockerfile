@@ -1,8 +1,5 @@
-# 使用ROS Noetic作为基础镜像
-FROM ubuntu:20.04
-
-ARG USER_NAME=ros
-ARG PASSWD=q
+# 使用ROS Melodic 作为基础镜像
+FROM ubuntu:18.04
 
 # 设置非交互式模式
 ENV DEBIAN_FRONTEND=noninteractive
@@ -45,24 +42,14 @@ RUN apt-get update && apt-get install -y \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - &&\
     apt-get update && \
     apt-get install -y \
-    ros-noetic-desktop-full \
+    ros-melodic-desktop-full \
     python3-pip tmux --fix-missing && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc && \
-    useradd -m ${USER_NAME} && \
-    echo ${USER_NAME}:${PASSWD} | chpasswd && \
-    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
+    rm -rf /var/lib/apt/lists/*
 
 # 开放ROS主机
 ENV ROS_MASTER_URI=http://localhost:11311
 ENV ROS_HOSTNAME=localhost
 ENV DISPLAY=:0
-
-# 设置ROS工作空间目录
-WORKDIR /home/${USER_NAME}
-
-# 设置默认用户
-USER ${USER_NAME}
 
 # 启动终端
 CMD ["bash"]
