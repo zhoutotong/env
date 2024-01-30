@@ -25,6 +25,7 @@ ENV LANG=zh_CN.UTF-8
 # 添加 sudo 权限
 RUN apt-get update && apt-get install -y \
     tzdata \
+    curl \
     locales && \
     apt-get clean && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
@@ -32,24 +33,11 @@ RUN apt-get update && apt-get install -y \
     echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen && \
     locale-gen && \
     update-locale LANG=zh_CN.UTF-8 && \   
-    apt-get update && apt-get install -y \
-    x11-apps \
-    xserver-xorg-core \
-    lsb-release \
-    --fix-missing \
-    xterm && \
-    apt-get update && \
-    apt install -y curl gnupg2 zsh git && \
-    apt-get update && \
-    apt-get install -y \
-    python3-pip sudo tmux cmake --fix-missing && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
-    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
-
-# 开放ROS主机
-ENV DISPLAY=:0
+    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers && \
+    curl -fsSL https://code-server.dev/install.sh | sh
 
 # 设置ROS工作空间目录
 WORKDIR /home/${USER_NAME}
@@ -57,12 +45,5 @@ WORKDIR /home/${USER_NAME}
 # 设置默认用户
 USER ${USER_NAME}
 
-RUN \
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc"
-
-
 # 启动终端
-CMD ["zsh"]
+CMD ["code-server"]
