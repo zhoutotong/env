@@ -51,7 +51,9 @@ RUN \
     apt-get install -y \
     libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev && \
     apt-get install -y \
-    python3-pip sudo tmux cmake --fix-missing && \
+    python3-pip sudo tmux cmake \
+    clang libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev \
+    --fix-missing && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
