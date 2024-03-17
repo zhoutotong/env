@@ -1,5 +1,5 @@
-# 使用 ubuntu:22.04 作为基础镜像
-FROM ubuntu:22.04
+# 使用 ubuntu:20.04 作为基础镜像
+FROM ubuntu:20.04
 
 ARG USER_NAME=coin
 ARG PASSWD=coin
