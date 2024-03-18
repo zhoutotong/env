@@ -44,7 +44,7 @@ RUN \
     xterm \
     --fix-missing && \
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null && \
-    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy-rc main' | tee -a /etc/apt/sources.list.d/kitware.list >/dev/null && \
+    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal-rc main' | tee -a /etc/apt/sources.list.d/kitware.list >/dev/null && \
     apt-get update && \
     apt-get install -y curl gnupg2 zsh git && \
     apt-get install -y build-essential libgl1-mesa-dev && \
@@ -52,7 +52,7 @@ RUN \
     libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev && \
     apt-get install -y \
     python3-pip sudo tmux cmake \
-    clang libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev \
+    clang libc++-12-dev libglu1-mesa-dev libc++abi-12-dev ninja-build libxi-dev \
     --fix-missing && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
