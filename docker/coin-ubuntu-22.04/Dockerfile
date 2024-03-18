@@ -54,6 +54,7 @@ RUN \
     python3-pip sudo tmux cmake \
     clang libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev \
     --fix-missing && \
+    apt-get install -y libboost-all-dev libqtermwidget5-0-dev qtbase5-dev && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \

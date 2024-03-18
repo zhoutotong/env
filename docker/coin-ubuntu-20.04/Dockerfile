@@ -60,6 +60,7 @@ RUN \
     echo "# deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" >> /etc/apt/sources.list && \
     apt-get update && \
     apt-get install -y clang-14 libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev && \
+    apt-get install -y libboost-all-dev libqtermwidget5-0-dev qtbase5-dev && \
     ln -s /bin/clang-14 /bin/clang && ln -s /bin/clang++-14 /bin/clang++ && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
