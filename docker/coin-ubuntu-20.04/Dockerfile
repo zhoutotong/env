@@ -54,14 +54,14 @@ RUN \
     python3-pip sudo tmux cmake \
     --fix-missing && \
     wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    echo "# 14" >> /etc/apt/sources.list && \
-    echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" >> /etc/apt/sources.list && \
-    echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" >> /etc/apt/sources.list && \
-    echo "# deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" >> /etc/apt/sources.list && \
+    echo "# 18" >> /etc/apt/sources.list && \
+    echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-18 main" >> /etc/apt/sources.list && \
+    echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-18 main" >> /etc/apt/sources.list && \
+    echo "# deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-18 main" >> /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install -y clang-14 libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev && \
+    apt-get install -y clang-18 libc++-18-dev libglu1-mesa-dev libc++abi-18-dev ninja-build libxi-dev && \
     apt-get install -y libboost-all-dev libqtermwidget5-0-dev qtbase5-dev libmagic-dev&& \
-    ln -s /bin/clang-14 /bin/clang && ln -s /bin/clang++-14 /bin/clang++ && \
+    ln -s /bin/clang-18 /bin/clang && ln -s /bin/clang++-18 /bin/clang++ && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
