@@ -65,7 +65,9 @@ RUN \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
-    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
+    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers && \
+    echo '/opt/coin/hydrogen/setup.bash' >> ${HOME_DIR}"/.bashrc"
+
 
 # RUN \
 
@@ -82,8 +84,9 @@ RUN \
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc"
+    sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc" && \
+    echo '/opt/coin/hydrogen/setup.zsh' >> ${HOME_DIR}"/.zshrc"
 
 
 # 启动终端
-CMD ["zsh"]
+CMD ["/bin/zsh"]
