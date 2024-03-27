@@ -67,7 +67,16 @@ RUN \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
     echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
-# RUN \
+# install ros-noetic
+RUN \
+    apt-get update && \
+    sh -c '. /etc/lsb-release && echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list' && \
+    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - &&\
+    apt-get update && \
+    apt-get install -y \
+    ros-noetic-desktop-full ros-noetic-jsk-recognition ros-noetic-geodesy \
+    python3-pip tmux --fix-missing && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV DISPLAY=:0
 
@@ -82,7 +91,9 @@ RUN \
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc"
+    sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc" && \
+    echo "source /opt/ros/noetic/setup.zsh" >> ${HOME_DIR}"/.zshrc" && \
+    echo "source /opt/coin/hydrogen/setup.zsh" >> ${HOME_DIR}"/.zshrc"
 
 
 # 启动终端
