@@ -233,6 +233,6 @@ RUN \
 
 
 # 制定默认 shell
-SHELL ["/bin/zsh", "-c"]
+SHELL ["/bin/zsh"]
 # 启动终端
-ENTRYPOINT ["/bin/zsh", "-c"]
+ENTRYPOINT ["/bin/zsh"]

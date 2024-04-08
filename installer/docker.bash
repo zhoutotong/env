@@ -6,6 +6,10 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+if ! command -v curl &> /dev/null; then
+    apt-get install curl -y
+fi
+
 # 检查是否安装Docker
 if ! command -v docker &> /dev/null; then
     echo "Docker未安装，正在下载..."
