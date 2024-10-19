@@ -70,15 +70,6 @@ ENV TZ=Asia/Shanghai
 # 设置语言环境为中文（中国大陆地区）
 ENV LANG=zh_CN.UTF-8
 
-# 安装 tzdata 软件包
-# 配置系统时区为非交互模式下的 TZ 环境变量值
-# 设置系统的国家或地区为中国大陆
-# 更新包管理器和安装常用工具
-# 更新包管理器和安装常用工具
-# 设置环境变量
-# 创建新用户
-# 设置用户密码
-# 添加 sudo 权限
 RUN \
     sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
     sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
@@ -109,7 +100,7 @@ RUN \
     apt-get install -y \
     libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev && \
     apt-get install -y \
-    python3-pip sudo tmux \
+    python3-pip sudo tmux gdb \
     --fix-missing && \
     apt-get install -y clang-18 libc++-18-dev libglu1-mesa-dev libc++abi-18-dev ninja-build libxi-dev --fix-missing && \
     apt-get install -y libqtermwidget5-0-dev qtbase5-dev libmagic-dev liblzma-dev libzstd-dev \
@@ -121,14 +112,15 @@ RUN \
     libopencv-video-dev \
     libopencv-contrib-dev --fix-missing && \
     wget https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64 -O /usr/bin/bazelisk && \
+    chmod +x /usr/bin/bazelisk && \
     pip3 install -i https://pypi.mirrors.ustc.edu.cn/simple/ numpy cmake && \
     ln -s /bin/clang-18 /bin/clang && ln -s /bin/clang++-18 /bin/clang++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m ${USER_NAME} && \
     echo ${USER_NAME}:${PASSWD} | chpasswd && \
-    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
-
+    echo ${USER_NAME}' ALL=(ALL:ALL) ALL' >> /etc/sudoers && \
+    usermod -s /bin/zsh ${USER_NAME}
 
 # RUN \
 
@@ -148,7 +140,6 @@ RUN \
     sed -i 's/^plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' ${HOME_DIR}"/.zshrc" && \
     echo 'source /opt/coin/hydrogen/setup.zsh' >> ${HOME_DIR}"/.zshrc" && \
     echo 'source /opt/coin/hydrogen/setup.bash' >> ${HOME_DIR}"/.bashrc"
-
 
 # 制定默认 shell
 SHELL ["/bin/zsh"]
