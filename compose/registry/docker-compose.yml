@@ -1,0 +1,12 @@
+version: '3.6'
+services:
+  registry:
+    image: registry:latest
+    container_name: docker-registry
+    restart: always
+    networks:
+      - '$NETWORKS'
+    ports:
+      - '5000:5000'
+    volumes:
+      - $REGISTRY_HOME/data:/var/lib/registry

@@ -1,0 +1,16 @@
+version: '3'
+
+### sftp
+### Usage: COIN_ENV_SFTP_DATA=<directory-to-data-path> docker compose up -d
+###    COIN_ENV_SFTP_USER: username
+###    COIN_ENV_SFTP_PASS: password
+###    COIN_ENV_SFTP_DATA: directory-to-data-path
+
+services:
+  sftp:
+    image: atmoz/sftp
+    ports:
+      - "11022:22"
+    volumes:
+      - ${COIN_ENV_SFTP_DATA}:/home/sftp/storage
+    command: ${COIN_ENV_SFTP_USER}:${COIN_ENV_SFTP_PASS}:1001
