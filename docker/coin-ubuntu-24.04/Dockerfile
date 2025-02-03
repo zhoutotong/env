@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ARG USER_N=coin
 ARG USER_P=coin
@@ -20,26 +20,22 @@ RUN \
     echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen && \
     locale-gen && \
     update-locale LANG=zh_CN.UTF-8 && \   
-    apt-get update && apt-get install -y \
+    apt-get update && \
+    apt-get install -y \
     x11-apps \
     xserver-xorg-core \
     lsb-release \
     ca-certificates gpg wget \
     xterm \
-    --fix-missing && \
-    apt-get update && \
-    apt-get install -y curl gnupg2 zsh git && \
-    apt-get install -y build-essential libgl1-mesa-dev && \
-    apt-get install -y \
-    libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev && \
-    apt-get install -y \
+    curl gnupg2 zsh git \
+    build-essential libgl1-mesa-dev \
+    libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev \
     python3-pip sudo tmux \
     clang libc++-14-dev libglu1-mesa-dev libc++abi-14-dev ninja-build libxi-dev \
+    libboost-all-dev qtbase5-dev python3-numpy cmake \
     --fix-missing && \
-    apt-get install -y libboost-all-dev libqtermwidget5-0-dev qtbase5-dev && \
-    pip3 install -i https://pypi.mirrors.ustc.edu.cn/simple/ numpy cmake && \
     rm -rf /var/lib/apt/lists/* && \
-    useradd -m ${USER_N} && \
+    useradd -m -s /bin/bash ${USER_N} && \
     echo ${USER_N}:${USER_P} | chpasswd && \
     echo ${USER_N}' ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
@@ -51,7 +47,7 @@ WORKDIR /home/${USER_N}
 # set default user
 USER ${USER_N}
 
-# install on my zsh
+# install oh my zsh
 RUN \
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME_DIR}/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
